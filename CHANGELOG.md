@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Parser Service client
 - Sensor configuration
 - Gas flow logging
+- The amount of logging statements
 
 ## [0.1.0] - 02-03-2021
 ### Added
