@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="99030f50-5ddb-4baf-9b11-3551a9361e78" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="96f1b643-76e6-4fa3-b264-a9d2dbd82cb2" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,10 +22,10 @@
     <MetadataSource Address="http://localhost:8080/Dsmr/ParserService/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="c093c569-1b9c-4623-aadc-e7ed1e085b35" SourceId="1" SourceUrl="http://localhost:8080/Dsmr/ParserService/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="41fc0cf0-dd68-4bb0-bd0f-9d22fbf8ef40" SourceId="1" SourceUrl="http://localhost:8080/Dsmr/ParserService/mex" />
-    <MetadataFile FileName="service11.xsd" MetadataType="Schema" ID="a8aec64b-ea46-49b2-a415-689360eade97" SourceId="1" SourceUrl="http://localhost:8080/Dsmr/ParserService/mex" />
-    <MetadataFile FileName="SensateIoT.SmartEnergy.Dsmr.Parser.DTO.xsd" MetadataType="Schema" ID="32557e44-6767-4c1f-89de-a8df107e224d" SourceId="1" SourceUrl="http://localhost:8080/Dsmr/ParserService/mex" />
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="3c02592c-3732-4014-b305-5a98d2a3b972" SourceId="1" SourceUrl="http://localhost:8080/Dsmr/ParserService/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="212e1c5c-be1f-46d9-b366-254651b9a6ae" SourceId="1" SourceUrl="http://localhost:8080/Dsmr/ParserService/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="577c00b5-cd3f-4627-bdeb-dfc5fb6d186a" SourceId="1" SourceUrl="http://localhost:8080/Dsmr/ParserService/mex" />
+    <MetadataFile FileName="SensateIoT.SmartEnergy.Dsmr.Parser.Contracts.DTO.xsd" MetadataType="Schema" ID="08796565-e349-4282-a64a-cf1910e4688b" SourceId="1" SourceUrl="http://localhost:8080/Dsmr/ParserService/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

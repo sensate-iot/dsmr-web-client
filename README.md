@@ -1,39 +1,24 @@
-# Sensate IoT - Network
+# Sensate IoT - Smart Energy
 
-This is the core network solution for the Sensate IoT data platform. This
-solution contains all network infrastructure services:
+The Sensate IoT Smart Energy project implements an IoT solution for (Dutch)
+Smart Meters. The project consists of several repository's:
 
-- Message Router
-- Gateway + configuration API
-- Trigger service
-- Storage service
-- Live data service
-- Database definition
+- DSMR parser (this repo);
+- DSMR web client (implementator of this service)
+- Several customer facing apps
 
-## Router
+## DSMR Web Client
 
-The message router is at the core of Sensate IoT and responsible for routing
-messages between various systems. The router uses the MQTT protocol to route
-messages to:
+The DMSR Web Client Service connects to Sensate IoT as a live data client. This way
+DSMR data is routed to this service by the data platform. This service is responsible
+for serveral things:
 
-- Trigger services;
-- Storage services;
-- Live data services;
-- Public MQTT broker.
+- parsing the telegrams
+- writing energy measurements back to Sensate IoT
 
-The router routes both SO (Sensor Originating, or measurements) and ST (Sensor
-Terminating, or actuator) messages.
+## Parsing
 
-## Gateway
+While this service is responsible for the fact that telegrams are parsed, it doesn't
+actually parse them itself. This service implements a WCF client to the DSMR Parser
+Service.
 
-The gateway is the entry point to the platform. All other ingress services forward
-data to this gateway internally. The gateway performs message authentication. The
-authorization of messages is done by the router.
-
-## Services
-
-This solution contains serveral services that add value to a message or measurement:
-
-- automation via the trigger service;
-- persistance via the storage service;
-- real-time updates via the live data service.

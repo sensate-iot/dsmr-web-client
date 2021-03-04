@@ -76,7 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Connected Services\WCF.Parser\SensateIoT.SmartEnergy.Dsmr.Parser.DTO.xsd">
+    <None Include="Connected Services\WCF.Parser\SensateIoT.SmartEnergy.Dsmr.Parser.Contracts.DTO.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\WCF.Parser\SensateIoT.SmartEnergy.Dsmr.WebClient.Common.WCF.Parser.Telegram.datasource">
@@ -87,9 +87,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\WCF.Parser\service1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\WCF.Parser\service11.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import namespace="http://schemas.datacontract.org/2004/07/SensateIoT.SmartEnergy.Dsmr.Parser.DTO" />
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/SensateIoT.SmartEnergy.Dsmr.Parser.Contracts.DTO" />
   <xs:element name="Parse">
     <xs:complexType>
       <xs:sequence>
@@ -11,7 +11,7 @@
   <xs:element name="ParseResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/SensateIoT.SmartEnergy.Dsmr.Parser.DTO" minOccurs="0" name="ParseResult" nillable="true" type="q1:Telegram" />
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/SensateIoT.SmartEnergy.Dsmr.Parser.Contracts.DTO" minOccurs="0" name="ParseResult" nillable="true" type="q1:Telegram" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

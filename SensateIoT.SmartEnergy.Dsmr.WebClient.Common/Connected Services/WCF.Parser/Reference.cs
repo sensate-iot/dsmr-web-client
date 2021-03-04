@@ -15,7 +15,8 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.WCF.Parser {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Telegram", Namespace="http://schemas.datacontract.org/2004/07/SensateIoT.SmartEnergy.Dsmr.Parser.DTO")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Telegram", Namespace="http://schemas.datacontract.org/2004/07/SensateIoT.SmartEnergy.Dsmr.Parser.Contra" +
+        "cts.DTO")]
     [System.SerializableAttribute()]
     public partial class Telegram : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -29,7 +30,7 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.WCF.Parser {
         private SensateIoT.SmartEnergy.Dsmr.WebClient.Common.WCF.Parser.EnergyData EnergyDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private decimal GasConsumptionField;
+        private SensateIoT.SmartEnergy.Dsmr.WebClient.Common.WCF.Parser.GasData GasDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private SensateIoT.SmartEnergy.Dsmr.WebClient.Common.WCF.Parser.PowerData PowerDataField;
@@ -71,14 +72,14 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.WCF.Parser {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal GasConsumption {
+        public SensateIoT.SmartEnergy.Dsmr.WebClient.Common.WCF.Parser.GasData GasData {
             get {
-                return this.GasConsumptionField;
+                return this.GasDataField;
             }
             set {
-                if ((this.GasConsumptionField.Equals(value) != true)) {
-                    this.GasConsumptionField = value;
-                    this.RaisePropertyChanged("GasConsumption");
+                if ((object.ReferenceEquals(this.GasDataField, value) != true)) {
+                    this.GasDataField = value;
+                    this.RaisePropertyChanged("GasData");
                 }
             }
         }
@@ -108,7 +109,8 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.WCF.Parser {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="EnergyData", Namespace="http://schemas.datacontract.org/2004/07/SensateIoT.SmartEnergy.Dsmr.Parser.DTO")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="EnergyData", Namespace="http://schemas.datacontract.org/2004/07/SensateIoT.SmartEnergy.Dsmr.Parser.Contra" +
+        "cts.DTO")]
     [System.SerializableAttribute()]
     public partial class EnergyData : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -201,7 +203,70 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.WCF.Parser {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PowerData", Namespace="http://schemas.datacontract.org/2004/07/SensateIoT.SmartEnergy.Dsmr.Parser.DTO")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GasData", Namespace="http://schemas.datacontract.org/2004/07/SensateIoT.SmartEnergy.Dsmr.Parser.Contra" +
+        "cts.DTO")]
+    [System.SerializableAttribute()]
+    public partial class GasData : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private decimal GasConsumptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private decimal GasFlowField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal GasConsumption {
+            get {
+                return this.GasConsumptionField;
+            }
+            set {
+                if ((this.GasConsumptionField.Equals(value) != true)) {
+                    this.GasConsumptionField = value;
+                    this.RaisePropertyChanged("GasConsumption");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal GasFlow {
+            get {
+                return this.GasFlowField;
+            }
+            set {
+                if ((this.GasFlowField.Equals(value) != true)) {
+                    this.GasFlowField = value;
+                    this.RaisePropertyChanged("GasFlow");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PowerData", Namespace="http://schemas.datacontract.org/2004/07/SensateIoT.SmartEnergy.Dsmr.Parser.Contra" +
+        "cts.DTO")]
     [System.SerializableAttribute()]
     public partial class PowerData : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         

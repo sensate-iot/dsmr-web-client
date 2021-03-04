@@ -148,7 +148,6 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 					}
 
 					var data = Encoding.UTF8.GetString(ms.ToArray());
-					logger.Info($"Received data: {data}.");
 					this.ParseRxEvent(data);
 				}
 			} while(!ct.IsCancellationRequested);
