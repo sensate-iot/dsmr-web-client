@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+
 using Newtonsoft.Json;
+
+using SensateIoT.SmartEnergy.Dsmr.WebClient.Data.DTO;
 using SensateIoT.SmartEnergy.Dsmr.WebClient.Service.Settings;
-using SensateIoT.SmartEnergy.Dsmr.WebClientService.Settings;
 
 namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Service.Application
 {
