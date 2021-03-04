@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
+using System.Linq;
+
 using Newtonsoft.Json;
+
+using SensateIoT.SmartEnergy.Dsmr.WebClient.Data.DTO;
 using SensateIoT.SmartEnergy.Dsmr.WebClient.Service.Settings;
-using SensateIoT.SmartEnergy.Dsmr.WebClientService.Settings;
 
 namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Service.Application
 {
@@ -36,26 +39,20 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Service.Application
 			if(string.IsNullOrEmpty(sensorsFile)) throw new InvalidOperationException("No settings file configured.");
 			if(!File.Exists(sensorsFile)) throw new FileNotFoundException("Unable to open sensors file.", sensorsFile);
 
-			var sensors = JsonConvert.DeserializeObject<IEnumerable<Sensor>>(File.ReadAllText(sensorsFile));
+			var sensors = JsonConvert.DeserializeObject<IEnumerable<Sensor>>(File.ReadAllText(sensorsFile)).ToList();
+			VerifySensorConfiguration(sensors);
 
-			foreach(Sensor sensor in sensors) {
+			foreach(var sensor in sensors) {
 				listener.Sensors[sensor.Id] = sensor;
 			}
-			/*foreach(DictionaryEntry sensor in sensors) {
-				listener.Sensors[sensor.Key.ToString()] = sensor.Value.ToString();
+		}
+
+		private static void VerifySensorConfiguration(IEnumerable<Sensor> sensors)
+		{
+			foreach(var sensor in sensors) {
+				if(sensor.Id == null) throw new InvalidOperationException("Sensor ID missing!");
+				if(sensor.PowerSensor == null) throw new InvalidOperationException($"Power sensor missing for sensor {sensor.Id}");
 			}
-
-			foreach(DictionaryEntry gasSensor in gasSensors) {
-				var originSensor = gasSensor.Key.ToString();
-				var targetKeyValue = gasSensor.Value.ToString().Split(',');
-
-				listener.GasSensorMapping[originSensor] = targetKeyValue[0];
-				listener.GasSensors[targetKeyValue[0]] = targetKeyValue[1];
-
-				if(!listener.Sensors.ContainsKey(originSensor)) {
-					throw new InvalidOperationException($"Invalid gas sensor mapping. Cannot map {originSensor} to {targetKeyValue[0]}");
-				}
-			}*/
 		}
 
 		private static Remote BuildRemoteSettings()
@@ -68,7 +65,7 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Service.Application
 				Port = port,
 				Host = ConfigurationManager.AppSettings["hostname"],
 				Scheme = port == 443 ? "wss" : "ws",
-				storageUri = new Uri(ConfigurationManager.AppSettings["storageUri"])
+				StorageUri = new Uri(ConfigurationManager.AppSettings["storageUri"])
 			};
 
 			return remote;

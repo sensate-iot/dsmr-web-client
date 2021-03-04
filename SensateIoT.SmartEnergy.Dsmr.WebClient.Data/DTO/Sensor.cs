@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace SensateIoT.SmartEnergy.Dsmr.WebClientService.Settings
+namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Data.DTO
 {
 	public class Sensor
 	{
@@ -9,10 +9,12 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClientService.Settings
 		[JsonProperty("key")]
 		public string Key { get; set; }
 		[JsonProperty("gasSensor")]
-		public GasSensor GasSensor { get; set; }
+		public DsmrSensor GasSensor { get; set; }
+		[JsonProperty("powerSensor")]
+		public DsmrSensor PowerSensor { get; set; }
 	}
 
-	public class GasSensor 
+	public class DsmrSensor 
 	{
 		[JsonProperty("id")]
 		public string Id { get; set; }

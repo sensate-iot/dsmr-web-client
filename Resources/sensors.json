@@ -1,10 +1,14 @@
 [
-   {
-      "id":"5efd92e8282963000157602f",
-      "gasSensor":{
-         "id":"5efd931e2829630001576121",
-         "key":"T26QaN0D8tHfp3kQHheslMvxSuNsSfyv"
-      },
-      "key":"8BhZ@LhfbFWLAofdeByh3hmoBfTwU3UQ"
-   }
+  {
+    "id": "5efd92e8282963000157602f",
+    "key": "8BhZ@LhfbFWLAofdeByh3hmoBfTwU3UQ",
+    "gasSensor": {
+      "id": "5efd931e2829630001576121",
+      "key": "T26QaN0D8tHfp3kQHheslMvxSuNsSfyv"
+    },
+    "powerSensor": {
+      "id": "5efd92e8282963000157602f",
+      "key": "8BhZ@LhfbFWLAofdeByh3hmoBfTwU3UQ"
+    }
+  }
 ]

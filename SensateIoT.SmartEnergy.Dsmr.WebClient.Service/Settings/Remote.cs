@@ -8,6 +8,6 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Service.Settings
 		public string Host { get; set; }
 		public ushort Port { get; set; }
 		public string Path { get; set; }
-		public Uri storageUri { get; set; }
+		public Uri StorageUri { get; set; }
 	}
 }

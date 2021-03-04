@@ -73,7 +73,7 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 
 		private Measurement buildGasMeasurement(Telegram telegram)
 		{
-			if(telegram.GasConsumption <= 0M) {
+			if(telegram.GasData is null) {
 				return null;
 			}
 
@@ -87,7 +87,8 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 			builder.WithSensorId(sensor.GasSensor.Id);
 			builder.WithSecret(sensor.GasSensor.Key);
 			builder.WithTimestamp(telegram.Timestamp);
-			builder.WithDataPoint(nameof(Telegram.GasConsumption), "m3", telegram.GasConsumption, 0.001);
+			builder.WithDataPoint(nameof(Telegram.GasData.GasConsumption), "m3", telegram.GasData.GasConsumption, 0.001);
+			builder.WithDataPoint(nameof(Telegram.GasData.GasFlow), "m3/min", telegram.GasData.GasFlow, 0.001);
 
 			return builder.Build();
 		}
@@ -97,8 +98,8 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 			var builder = this.createMeasurementBuilder(telegram);
 			var sensor = this.m_settings.Sensors[telegram.SensorId];
 
-			builder.WithSecret(sensor.Key);
-			builder.WithSensorId(telegram.SensorId);
+			builder.WithSecret(sensor.PowerSensor.Key);
+			builder.WithSensorId(sensor.PowerSensor.Id);
 			builder.WithTimestamp(telegram.Timestamp);
 
 			builder.WithDataPoint("Tariff", "", telegram.CurrentTariff == "NORMAL" ? 1 : 0)
@@ -138,11 +139,11 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 					
 				telegrams = textTelegrams.Select(textTelegram => this.ParseTelegram(messages.SensorId, textTelegram)).ToList();
 
-				this.m_logger.Info($"Publishing measurements: {JsonConvert.SerializeObject(telegrams)}");
+				this.m_logger.Debug($"Publishing measurements: {JsonConvert.SerializeObject(telegrams)}");
 			} catch(JsonSerializationException ex) {
-				this.m_logger.Error("Unable to parse control message!", ex);
+				this.m_logger.Error($"Unable to parse control message! Message: {data}", ex);
 			} catch(InvalidOperationException ex) {
-				this.m_logger.Error("Unable to parse text telegrams.", ex);
+				this.m_logger.Error($"Unable to parse text telegrams. Telegram data: {data}.", ex);
 			}
 
 			return telegrams;
@@ -153,9 +154,7 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 			Telegram telegram = null;
 
 			try {
-				this.m_logger.Info($"Origin sensor: {sensorId}{Environment.NewLine}" +
-				                   $"Received telegram: {textTelegram.Telegram}{Environment.NewLine}" +
-				                   $"Longitude: {textTelegram.Longitude} || Latitude: {textTelegram.Latitude}.");
+				this.m_logger.Info($"Origin sensor: {sensorId}.");
 
 				telegram = this.m_parserClient.Parse(textTelegram.Telegram);
 				telegram.SensorId = sensorId;
@@ -165,14 +164,15 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 					telegram.Latitude = textTelegram.Latitude;
 					telegram.Longitude = textTelegram.Longitude;
 				}
-
-				this.m_logger.Info(JsonConvert.SerializeObject(telegram));
 			} catch(ServerTooBusyException ex) {
 				this.m_logger.Error("DSMR parser timeout. Is the remote up?", ex);
+				this.m_logger.Error($"Telegram text: {textTelegram.Telegram}");
 			} catch(FaultException ex) {
 				this.m_logger.Error("Error in the DSMR parser service.", ex);
+				this.m_logger.Error($"Telegram text: {textTelegram.Telegram}");
 			} catch(CommunicationException ex) {
 				this.m_logger.Error("Unknown DSMR parsing exception.", ex);
+				this.m_logger.Error($"Telegram text: {textTelegram.Telegram}");
 
 				if(this.m_parserClient.State == CommunicationState.Faulted) {
 					this.m_parserClient = new ParserServiceClient(EndpointConfigName);
