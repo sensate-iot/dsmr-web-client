@@ -26,6 +26,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{
 		Resources\sensors.json = Resources\sensors.json
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Automated Builds", "Automated Builds", "{6227FC12-1F63-45FB-9461-83E49D834CAD}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\buildvalidation-webclient.yml = .github\workflows\buildvalidation-webclient.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
