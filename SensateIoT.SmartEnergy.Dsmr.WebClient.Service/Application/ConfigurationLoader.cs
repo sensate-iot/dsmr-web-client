@@ -65,7 +65,7 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Service.Application
 				Port = port,
 				Host = ConfigurationManager.AppSettings["hostname"],
 				Scheme = port == 443 ? "wss" : "ws",
-				storageUri = new Uri(ConfigurationManager.AppSettings["storageUri"])
+				StorageUri = new Uri(ConfigurationManager.AppSettings["storageUri"])
 			};
 
 			return remote;

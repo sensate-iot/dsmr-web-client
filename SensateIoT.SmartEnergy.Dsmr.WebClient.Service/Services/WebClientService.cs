@@ -31,7 +31,7 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Service.Services
 
 			/* Start/add other services */
 			this.m_pingService = new PingService(TimeSpan.FromSeconds(5), this.m_client);
-			var storageService = new MeasurementStorageService(settings.Remote.storageUri,
+			var storageService = new MeasurementStorageService(settings.Remote.StorageUri,
 				this.m_settings.Listener.ApiKey,
 				LogManager.GetLogger(nameof(MeasurementStorageService)));
 			this.m_parser = new DsmrParserService(storageService, new ParserSettings {
