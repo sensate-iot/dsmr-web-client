@@ -32,7 +32,7 @@ jobs:
         run: msbuild -version
 
       - name: Restore packages
-        run: nuget restore dsmr-parser.sln
+        run: nuget restore web-client.sln
 
       - name: Build 
-        run: msbuild.exe dsmr-parser.sln /nologo /nr:false /p:configuration="Debug"
+        run: msbuild.exe web-client.sln /nologo /nr:false /p:configuration="Debug"
