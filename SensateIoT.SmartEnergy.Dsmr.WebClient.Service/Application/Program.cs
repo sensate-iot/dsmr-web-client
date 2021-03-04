@@ -2,7 +2,6 @@
 using System.ServiceProcess;
 
 using log4net;
-
 using SensateIoT.SmartEnergy.Dsmr.WebClient.Service.Services;
 
 namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Service.Application
@@ -29,11 +28,11 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Service.Application
         private static void StartInteractive()
         {
 			var svc = new WindowsService();
+			var host = new ConsoleHost(svc);
 
-			svc.StartService();
+			host.Run();
 			Console.WriteLine("Press <ENTER> to exit.");
 			Console.ReadLine();
-			svc.StopService();
         }
     }
 }
