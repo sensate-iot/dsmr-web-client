@@ -1,12 +1,13 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+
 using SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services;
 
 namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Abstract
 {
-	public interface IWebSocketClientService
+	public interface IListener
 	{
-		event WebSocketClientService.WebSocketEventHandler OnWebSocketMessage;
+		event BaseListener.WebSocketEventHandler OnWebSocketMessage;
 
 		Task StartAsync(CancellationToken token);
 		Task StopAsync();

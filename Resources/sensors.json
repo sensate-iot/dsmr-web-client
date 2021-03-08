@@ -9,6 +9,10 @@
     "powerSensor": {
       "id": "5efd92e8282963000157602f",
       "key": "8BhZ@LhfbFWLAofdeByh3hmoBfTwU3UQ"
-    }
+    },
+    "environmentSensor": {
+      "id": "5efd9336282963000157618b",
+      "key": "lDwod0Zi4Zt1UVJUuBlJM_OhgOFrs0Uc"
+    } 
   }
 ]
