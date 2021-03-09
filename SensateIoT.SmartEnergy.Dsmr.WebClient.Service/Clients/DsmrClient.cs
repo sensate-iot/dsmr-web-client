@@ -17,7 +17,7 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Service.Clients
 
 		private readonly IListener m_dsmrClient;
 		private readonly PingService m_pingService;
-		private readonly IDsmrParserService m_parser;
+		private readonly IWebSocketEventService m_parser;
 		private Thread m_serviceThread;
 		private readonly AppSettings m_settings;
 

@@ -10,9 +10,10 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Service.Services
 {
 	public sealed class WebClientService : IDisposable
 	{
-		private static readonly ILog logger = LogManager.GetLogger("WebClientService");
+		private static readonly ILog logger = LogManager.GetLogger(nameof(WebClientService));
 
 		private readonly DsmrClient m_client;
+		private readonly EnvironmentSensorClient m_environmentalClient;
 		private readonly CancellationTokenSource m_source;
 
 		public WebClientService(AppSettings settings)
@@ -21,13 +22,14 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Service.Services
 
 			/* Start/add other services */
 			this.m_client = new DsmrClient(settings);
+			this.m_environmentalClient = new EnvironmentSensorClient(settings);
 		}
 
 		public void Start()
 		{
 			logger.Info("Starting web client service hosting...");
 			this.m_client.Start(this.m_source.Token);
-
+			this.m_environmentalClient.Start(this.m_source.Token);
 		}
 
 		public void Stop()
@@ -35,6 +37,7 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Service.Services
 			logger.Warn("Stopping web client service...");
 			this.m_source.Cancel();
 			this.m_client.Stop();
+			this.m_environmentalClient.Stop();
 			logger.Warn("Web client service stopped.");
 		}
 

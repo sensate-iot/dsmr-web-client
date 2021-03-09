@@ -54,7 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstract\IDsmrParserService.cs" />
+    <Compile Include="Abstract\IWebSocketEventService.cs" />
     <Compile Include="Abstract\IMeasurementStorageService.cs" />
     <Compile Include="Abstract\IListener.cs" />
     <Compile Include="Connected Services\WCF.Parser\Reference.cs">
@@ -62,12 +62,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Converters\TextTelegramConverter.cs" />
+    <Compile Include="Converters\DsmrTelegramConverter.cs" />
+    <Compile Include="Converters\EnvironimentalTelegramConverter.cs" />
     <Compile Include="Events\EventType.cs" />
     <Compile Include="Events\WebSocketEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BaseListener.cs" />
     <Compile Include="Services\DsmrParserService.cs" />
+    <Compile Include="Services\EnvironmentSensorParserService.cs" />
     <Compile Include="Services\MeasurementStorageService.cs" />
     <Compile Include="Services\PingService.cs" />
     <Compile Include="Services\AuthorizationService.cs" />

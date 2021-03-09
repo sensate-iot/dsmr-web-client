@@ -18,12 +18,12 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 		public delegate void WebSocketEventHandler(object sender, WebSocketEventArgs e);
 		public event WebSocketEventHandler OnWebSocketMessage;
 
-		protected readonly IList<Tuple<string, string>> m_sensors;
-		protected readonly ILog m_logger;
-		protected string m_userId;
-		protected string m_apiKey;
+		private readonly IList<Tuple<string, string>> m_sensors;
+		private readonly ILog m_logger;
+		private string m_userId;
+		private string m_apiKey;
 		protected readonly ClientWebSocket m_socket;
-		protected readonly Uri m_remote;
+		private readonly Uri m_remote;
 
 		protected BaseListener(Uri remote, ILog logger)
 		{
@@ -33,7 +33,7 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 			this.m_remote = remote;
 		}
 
-		protected void Invoke(string data, EventType type)
+		private void Invoke(string data, EventType type)
 		{
 			this.OnWebSocketMessage?.Invoke(this, new WebSocketEventArgs {
 				Data = data,

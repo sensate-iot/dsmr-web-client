@@ -7,7 +7,7 @@ using SensateIoT.SmartEnergy.Dsmr.WebClient.Data.DTO;
 
 namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Converters
 {
-	public static class TextTelegramConverter
+	public static class DsmrTelegramConverter
 	{
 		public static TextTelegram Convert(ControlMessage message)
 		{
