@@ -18,7 +18,7 @@ using SensateIoT.SmartEnergy.Dsmr.WebClient.Data.Models;
 
 namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 {
-	public sealed class DsmrParserService : IDsmrParserService
+	public sealed class DsmrParserService : IWebSocketEventService
 	{
 		private readonly ILog m_logger;
 		private ParserServiceClient m_parserClient;
@@ -135,7 +135,7 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 
 			try {
 				var messages = JsonConvert.DeserializeObject<BulkControlMessage>(data);
-				var textTelegrams = messages.Messages.Select(TextTelegramConverter.Convert).ToList();
+				var textTelegrams = messages.Messages.Select(DsmrTelegramConverter.Convert).ToList();
 					
 				telegrams = textTelegrams.Select(textTelegram => this.ParseTelegram(messages.SensorId, textTelegram)).ToList();
 

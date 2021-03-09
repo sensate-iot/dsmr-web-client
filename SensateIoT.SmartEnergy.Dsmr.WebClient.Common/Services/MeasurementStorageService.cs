@@ -3,8 +3,9 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+
 using log4net;
-using Newtonsoft.Json;
+
 using SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Abstract;
 using SensateIoT.SmartEnergy.Dsmr.WebClient.Data.Models;
 

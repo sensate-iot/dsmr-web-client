@@ -12,6 +12,8 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Data.DTO
 		public DsmrSensor GasSensor { get; set; }
 		[JsonProperty("powerSensor")]
 		public DsmrSensor PowerSensor { get; set; }
+		[JsonProperty("environmentSensor")]
+		public DsmrSensor EnvironmentSensor { get; set; }
 	}
 
 	public class DsmrSensor 

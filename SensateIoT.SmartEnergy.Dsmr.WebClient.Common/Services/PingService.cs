@@ -14,12 +14,12 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 
 		private readonly TimeSpan m_interval;
 		private readonly TimeSpan m_startDelay;
-		private readonly IWebSocketClientService m_client;
+		private readonly IListener m_client;
 
 		private int m_unansweredPings;
 		private Timer m_timer;
 
-		public PingService(TimeSpan interval, IWebSocketClientService client)
+		public PingService(TimeSpan interval, IListener client)
 		{
 			this.m_interval = interval;
 			this.m_startDelay = TimeSpan.FromSeconds(5);
