@@ -36,7 +36,7 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Service.Clients
 			this.m_parser = new EnvironmentSensorParserService(storageService, new ParserSettings {
 				ApiKey = settings.Listener.ApiKey,
 				Sensors = settings.Listener.Sensors
-			}, LogManager.GetLogger("DsmrParserService"));
+			}, LogManager.GetLogger(nameof(EnvironmentSensorParserService)));
 		}
 
 		public void Start(CancellationToken ct)
