@@ -39,9 +39,9 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Converters
 			tmp = tmp.Replace(Needle, "");
 			var data = JToken.Parse(tmp);
 
-			builder.WithDataPoint("pressure", "Pa", data["p"].ToObject<decimal>(), 0.01);
-			builder.WithDataPoint("temperature", "C", data["t"].ToObject<decimal>(), 0.01);
-			builder.WithDataPoint("rh", "%", data["rh"].ToObject<decimal>(), 0.01);
+			builder.WithDataPoint("pressure", "Pa", data["p"].ToObject<decimal>(), 0.1);
+			builder.WithDataPoint("temperature", "C", data["t"].ToObject<decimal>(), 0.1);
+			builder.WithDataPoint("rh", "%", data["rh"].ToObject<decimal>(), 0.00001);
 
 			return builder.Build();
 		}

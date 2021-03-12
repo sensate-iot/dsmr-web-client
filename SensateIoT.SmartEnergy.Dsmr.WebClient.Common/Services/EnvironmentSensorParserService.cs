@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using log4net;
-using MongoDB.Bson;
 using Newtonsoft.Json;
 
 using SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Abstract;
