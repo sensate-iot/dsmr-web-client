@@ -3,13 +3,13 @@ using System.Security.Cryptography;
 using System.Text;
 
 using Newtonsoft.Json;
-
+using SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Abstract;
 using SensateIoT.SmartEnergy.Dsmr.WebClient.Data.DTO;
 using SensateIoT.SmartEnergy.Dsmr.WebClient.Data.Models;
 
 namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 {
-	public class AuthorizationService
+	public class AuthorizationService : IAuthorizationService
 	{
 		public string SignMeasurement(Measurement measurement)
 		{

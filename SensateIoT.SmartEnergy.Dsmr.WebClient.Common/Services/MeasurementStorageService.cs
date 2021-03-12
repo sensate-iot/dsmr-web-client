@@ -15,16 +15,16 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 	{
 		private readonly HttpClient m_client;
 		private readonly Uri m_remote;
-		private readonly AuthorizationService m_auth;
+		private readonly IAuthorizationService m_auth;
 		private readonly ILog m_logger;
 		private readonly string m_apiKey;
 
-		public MeasurementStorageService(Uri remote, string key, ILog logger)
+		public MeasurementStorageService(IAuthorizationService auth, Uri remote, string key, ILog logger)
 		{
 			this.m_client = new HttpClient();
 			this.m_remote = remote;
 			this.m_logger = logger;
-			this.m_auth = new AuthorizationService();
+			this.m_auth = auth;
 			this.m_apiKey = key;
 		}
 

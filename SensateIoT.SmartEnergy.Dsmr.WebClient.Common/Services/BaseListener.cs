@@ -5,9 +5,12 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+
 using log4net;
+
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+
 using SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Events;
 using SensateIoT.SmartEnergy.Dsmr.WebClient.Data.DTO;
 

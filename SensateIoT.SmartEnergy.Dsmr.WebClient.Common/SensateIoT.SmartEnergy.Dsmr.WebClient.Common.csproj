@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\IAuthorizationService.cs" />
     <Compile Include="Abstract\IWebSocketEventService.cs" />
     <Compile Include="Abstract\IMeasurementStorageService.cs" />
     <Compile Include="Abstract\IListener.cs" />
