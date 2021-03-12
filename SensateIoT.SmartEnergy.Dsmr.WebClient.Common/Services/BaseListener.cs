@@ -5,15 +5,18 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+
 using log4net;
+
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+
 using SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Events;
 using SensateIoT.SmartEnergy.Dsmr.WebClient.Data.DTO;
 
 namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 {
-	public abstract class BaseListener
+	public abstract class BaseListener : IDisposable
 	{
 		public delegate void WebSocketEventHandler(object sender, WebSocketEventArgs e);
 		public event WebSocketEventHandler OnWebSocketMessage;
@@ -99,11 +102,15 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 
 		protected async Task ListenAsync(CancellationToken ct)
 		{
-			do {
-				await this.m_socket.ConnectAsync(this.m_remote, ct).ConfigureAwait(false);
-				this.Invoke(null, EventType.Connected);
-				await this.ReceiveAsync(ct).ConfigureAwait(false);
-			} while(!ct.IsCancellationRequested);
+			try {
+				do {
+					await this.m_socket.ConnectAsync(this.m_remote, ct).ConfigureAwait(false);
+					this.Invoke(null, EventType.Connected);
+					await this.ReceiveAsync(ct).ConfigureAwait(false);
+				} while(!ct.IsCancellationRequested);
+			} catch(OperationCanceledException) {
+				this.m_logger.Warn("Stopping because a stop has been requested!");
+			}
 		}
 
 		private void ParseRxEvent(string data)
@@ -139,6 +146,19 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 					this.ParseRxEvent(data);
 				}
 			} while(!ct.IsCancellationRequested);
+		}
+
+		protected virtual void Dispose(bool disposing)
+		{
+			if(disposing) {
+				this.m_socket.Dispose();
+			}
+		}
+
+		public void Dispose()
+		{
+			this.Dispose(true);
+			GC.SuppressFinalize(this);
 		}
 	}
 }

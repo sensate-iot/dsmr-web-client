@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using log4net;
-using MongoDB.Bson;
 using Newtonsoft.Json;
 
 using SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Abstract;
@@ -14,7 +13,7 @@ using SensateIoT.SmartEnergy.Dsmr.WebClient.Data.DTO;
 
 namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 {
-	public class EnvironmentSensorParserService : IWebSocketEventService
+	public sealed class EnvironmentSensorParserService : IWebSocketEventService
 	{
 		private readonly ILog m_logger;
 		private readonly IMeasurementStorageService m_storageService;

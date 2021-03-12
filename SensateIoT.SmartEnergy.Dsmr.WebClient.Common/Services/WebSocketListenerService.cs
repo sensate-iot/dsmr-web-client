@@ -8,7 +8,7 @@ using SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Abstract;
 
 namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 {
-	public sealed class WebSocketListenerService : BaseListener, IListener, IDisposable
+	public sealed class WebSocketListenerService : BaseListener, IListener 
 	{
 		private CancellationTokenSource m_ct;
 		private Task m_backgroundTask;
@@ -32,11 +32,14 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 			await this.m_backgroundTask.ConfigureAwait(false);
 		}
 
-
-		public void Dispose()
+		protected override void Dispose(bool disposing)
 		{
-			this.m_socket?.Dispose();
-			this.m_ct?.Dispose();
+			base.Dispose(disposing);
+
+			if(disposing) {
+				this.m_socket.Dispose();
+				this.m_ct.Dispose();
+			}
 		}
 	}
 }
