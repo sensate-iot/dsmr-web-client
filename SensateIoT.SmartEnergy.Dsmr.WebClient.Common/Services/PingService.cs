@@ -8,7 +8,7 @@ using SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Events;
 
 namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 {
-	public class PingService : IDisposable
+	public sealed class PingService : IDisposable
 	{
 		private static ILog logger = LogManager.GetLogger("PingService");
 
@@ -63,7 +63,7 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 
 		public void Dispose()
 		{
-			this.m_timer?.Dispose();
+			this.m_timer.Dispose();
 		}
 	}
 }

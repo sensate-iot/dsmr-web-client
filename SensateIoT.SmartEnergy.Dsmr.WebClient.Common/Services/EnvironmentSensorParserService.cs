@@ -13,7 +13,7 @@ using SensateIoT.SmartEnergy.Dsmr.WebClient.Data.DTO;
 
 namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 {
-	public class EnvironmentSensorParserService : IWebSocketEventService
+	public sealed class EnvironmentSensorParserService : IWebSocketEventService
 	{
 		private readonly ILog m_logger;
 		private readonly IMeasurementStorageService m_storageService;

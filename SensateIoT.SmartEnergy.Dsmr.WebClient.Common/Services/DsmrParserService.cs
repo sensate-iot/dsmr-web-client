@@ -185,6 +185,7 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 		public void Dispose()
 		{
 			this.m_storageService.Dispose();
+			this.m_parserClient.Close();
 		}
 	}
 }
