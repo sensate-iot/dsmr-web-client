@@ -57,6 +57,7 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Service.Clients
 					logger.Info("Operation cancelled: stop requested.", ex);
 				} catch(Exception ex) {
 					logger.Fatal("Unable to continue application flow.", ex);
+					throw;
 				}
 			}) { IsBackground = true };
 
