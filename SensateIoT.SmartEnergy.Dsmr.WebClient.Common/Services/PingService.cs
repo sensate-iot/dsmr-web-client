@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.WebSockets;
 using System.Threading;
 
 using log4net;
@@ -39,8 +40,14 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 
 		private async void InvokeAsync(object arg)
 		{
-			Interlocked.Increment(ref this.m_unansweredPings);
-			await this.m_client.PingAsync(CancellationToken.None);
+			try {
+				await this.m_client.PingAsync(CancellationToken.None);
+				Interlocked.Increment(ref this.m_unansweredPings);
+			} catch(InvalidOperationException) {
+				logger.Warn("Unable to write PING request to server.");
+			} catch(WebSocketException) {
+				logger.Warn("Unable to write PING request to server.");
+			}
 		}
 
 		public void HandleWebSocketEvent(object sender, WebSocketEventArgs args)

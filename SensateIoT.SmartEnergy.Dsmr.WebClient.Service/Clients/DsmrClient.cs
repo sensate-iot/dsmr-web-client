@@ -54,7 +54,10 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Service.Clients
 		            this.m_pingService.Start();
 		            this.m_dsmrClient.StartAsync(ct).GetAwaiter().GetResult();
 	            } catch(OperationCanceledException ex) {
-					logger.Info("Operation cancelled: stop requested.", ex);
+		            logger.Info("Operation cancelled: stop requested.", ex);
+	            } catch(Exception ex) {
+					logger.Fatal("Unable to continue application flow.", ex);
+					throw;
 	            }
             }) { IsBackground = true };
 
