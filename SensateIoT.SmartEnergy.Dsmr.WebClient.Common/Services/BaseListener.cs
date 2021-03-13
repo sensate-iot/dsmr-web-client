@@ -25,7 +25,7 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 		private readonly ILog m_logger;
 		private string m_userId;
 		private string m_apiKey;
-		protected readonly ClientWebSocket m_socket;
+		protected ClientWebSocket m_socket;
 		private readonly Uri m_remote;
 
 		protected BaseListener(Uri remote, ILog logger)
@@ -103,14 +103,26 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 		protected async Task ListenAsync(CancellationToken ct)
 		{
 			try {
-				do {
-					await this.m_socket.ConnectAsync(this.m_remote, ct).ConfigureAwait(false);
-					this.Invoke(null, EventType.Connected);
-					await this.ReceiveAsync(ct).ConfigureAwait(false);
-				} while(!ct.IsCancellationRequested);
+				await this.ListenInternalAsync(ct).ConfigureAwait(false);
 			} catch(OperationCanceledException) {
 				this.m_logger.Warn("Stopping because a stop has been requested!");
 			}
+		}
+
+		private async Task ListenInternalAsync(CancellationToken ct)
+		{
+			do {
+				try {
+					await this.m_socket.ConnectAsync(this.m_remote, ct).ConfigureAwait(false);
+					this.Invoke(null, EventType.Connected);
+					await this.ReceiveAsync(ct).ConfigureAwait(false);
+				} catch(WebSocketException) {
+					this.m_logger.Warn("WebSocket failed. Attempting to reconnect.");
+					var old = this.m_socket;
+					this.m_socket = new ClientWebSocket();
+					old.Dispose();
+				}
+			} while(!ct.IsCancellationRequested);
 		}
 
 		private void ParseRxEvent(string data)
