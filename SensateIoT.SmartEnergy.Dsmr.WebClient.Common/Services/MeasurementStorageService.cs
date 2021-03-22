@@ -35,11 +35,12 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 
 			content.Headers.Add("X-ApiKey", this.m_apiKey);
 
+			this.m_logger.Info("Writing a measurement to Sensate IoT.");
 			this.m_logger.Debug($"Writing JSON to Sensate IoT Gateway: {json}");
 			var result = await this.m_client.PostAsync(this.m_remote, content, ct).ConfigureAwait(false);
 			json = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-			this.m_logger.Debug($"Sensate IoT Gateway response: {json}");
+			this.m_logger.Info($"Sensate IoT Gateway response: {json}");
 		}
 
 		public void Dispose()
