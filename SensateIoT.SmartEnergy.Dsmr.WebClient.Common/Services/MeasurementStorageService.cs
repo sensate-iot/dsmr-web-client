@@ -40,7 +40,7 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 			var result = await this.m_client.PostAsync(this.m_remote, content, ct).ConfigureAwait(false);
 			json = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-			this.m_logger.Info($"Sensate IoT Gateway response: {json}");
+			this.m_logger.Info($"Sensate IoT Gateway response (HTTP: ${result.StatusCode:D}): {json}");
 		}
 
 		public void Dispose()
