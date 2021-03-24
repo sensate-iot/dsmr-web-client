@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.2.1] - 12-03-2021
 ### Updated
 - Data platform response logging
+- Version support policy
 
 ## [1.2.1] - 12-03-2021
 ### Added
