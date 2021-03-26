@@ -1,4 +1,4 @@
-name: Parser unit tests
+name: Web Client
 on:
   push:
       branches:
