@@ -16,9 +16,23 @@ for serveral things:
 - parsing the telegrams
 - writing energy measurements back to Sensate IoT
 
+In order to receive data, several sensors need to be configured with the correct routing
+configuration. To support all functionality (electrical data, gas data and environmental
+data), 4 sensors are required:
+
+- Raw telegram sensor;
+- Gas sensor;
+- Electrical/power sensor;
+- Environment sensor.
+
+The raw telegram sensor needs to following triggers:
+
+- Raw telegram sensor:
+  - Live data trigger to itself (for DSMR telegrams);
+  - Live data trigger to the environmental sensor.
+
 ## Parsing
 
 While this service is responsible for the fact that telegrams are parsed, it doesn't
 actually parse them itself. This service implements a WCF client to the DSMR Parser
 Service.
-
