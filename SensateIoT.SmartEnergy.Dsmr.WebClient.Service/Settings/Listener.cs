@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+
 using SensateIoT.SmartEnergy.Dsmr.WebClient.Data.DTO;
 
 namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Service.Settings
@@ -8,6 +10,7 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Service.Settings
 		public string UserId { get; set; }
 		public string ApiKey { get; set; }
 		public IDictionary<string, Sensor> Sensors { get; }
+		public TimeSpan SubscriptionInterval { get; set; }
 
 		public Listener()
 		{

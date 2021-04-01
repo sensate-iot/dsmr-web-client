@@ -21,19 +21,26 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 		public delegate void WebSocketEventHandler(object sender, WebSocketEventArgs e);
 		public event WebSocketEventHandler OnWebSocketMessage;
 
+		private const string UnsubscribeRequest = "unsubscribe";
+
 		private readonly IList<Tuple<string, string>> m_sensors;
 		private readonly ILog m_logger;
+		private readonly Uri m_remote;
+		private readonly TimeSpan m_subscriptionInterval;
+
 		private string m_userId;
 		private string m_apiKey;
-		protected ClientWebSocket m_socket;
-		private readonly Uri m_remote;
+		private ClientWebSocket m_socket;
+		private Timer m_subscriptionTimer;
 
-		protected BaseListener(Uri remote, ILog logger)
+
+		protected BaseListener(Uri remote, TimeSpan subscriptionInterval, ILog logger)
 		{
 			this.m_socket = new ClientWebSocket();
 			this.m_sensors = new List<Tuple<string, string>>();
 			this.m_logger = logger;
 			this.m_remote = remote;
+			this.m_subscriptionInterval = subscriptionInterval;
 		}
 
 		private void Invoke(string data, EventType type)
@@ -102,10 +109,46 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 
 		protected async Task ListenAsync(CancellationToken ct)
 		{
+			this.m_subscriptionTimer = new Timer(this.ResubscribeAsync, null, this.m_subscriptionInterval, this.m_subscriptionInterval);
+
 			try {
 				await this.ListenInternalAsync(ct).ConfigureAwait(false);
 			} catch(OperationCanceledException) {
+				this.m_subscriptionTimer.Change(Timeout.Infinite, Timeout.Infinite);
 				this.m_logger.Warn("Stopping because a stop has been requested!");
+			}
+		}
+
+		private async void ResubscribeAsync(object args)
+		{
+			this.m_logger.Info("Resubscribing all sensors.");
+
+			try {
+				await this.UnsubscribeAll().ConfigureAwait(false);
+				await this.AuthorizeSensorsAsync(CancellationToken.None).ConfigureAwait(false);
+			} catch(Exception ex) {
+				this.m_logger.Error("Unable to resubscribe sensors!", ex);
+				Environment.Exit(1);
+			}
+		}
+
+		private async Task UnsubscribeAll()
+		{
+			foreach(var (sensorId, _) in this.m_sensors) {
+				var subscribe = new WebSocketRequest<SensorUnsubscribeRequest> {
+					Request = UnsubscribeRequest,
+					Data = new SensorUnsubscribeRequest {
+						SensorId = sensorId
+					}
+				};
+
+				var json = JsonConvert.SerializeObject(subscribe);
+				var segment = new ArraySegment<byte>(Encoding.UTF8.GetBytes(json));
+
+				this.m_logger.Info($"Unsubscribing sensor: {sensorId}.");
+				this.m_logger.Debug($"Unsubscribe message: {json}");
+
+				await this.m_socket.SendAsync(segment, WebSocketMessageType.Text, true, CancellationToken.None);
 			}
 		}
 
@@ -163,6 +206,7 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 		protected virtual void Dispose(bool disposing)
 		{
 			if(disposing) {
+				this.m_subscriptionTimer.Dispose();
 				this.m_socket.Dispose();
 			}
 		}

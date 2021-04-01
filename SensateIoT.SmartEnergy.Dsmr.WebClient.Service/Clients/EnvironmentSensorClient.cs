@@ -26,7 +26,7 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Service.Clients
 			var uri = new Uri($"{settings.Remote.Scheme}://{settings.Remote.Host}:{settings.Remote.Port}{settings.Remote.Path}");
 			logger.Info($"Remote address: {uri}");
 
-			this.m_listener = new WebSocketListenerService(uri, LogManager.GetLogger("EnvironmentWebSocketClientService"));
+			this.m_listener = new WebSocketListenerService(uri, settings.Listener.SubscriptionInterval, LogManager.GetLogger("EnvironmentWebSocketClientService"));
 			this.m_pingService = new PingService(TimeSpan.FromSeconds(5), this.m_listener);
 			this.m_settings = settings;
 
