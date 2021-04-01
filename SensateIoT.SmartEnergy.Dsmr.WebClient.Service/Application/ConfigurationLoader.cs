@@ -25,8 +25,12 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Service.Application
 		{
 			var listener = new Listener {
 				UserId = ConfigurationManager.AppSettings["userId"] ??  throw new InvalidOperationException("No valid user ID configured!"),
-				ApiKey = ConfigurationManager.AppSettings["apiKey"] ??  throw new InvalidOperationException("No valid API key configured!")
+				ApiKey = ConfigurationManager.AppSettings["apiKey"] ??  throw new InvalidOperationException("No valid API key configured!"),
 			};
+
+			if(TimeSpan.TryParse(ConfigurationManager.AppSettings["subscriptionInterval"], out var ts)) {
+				listener.SubscriptionInterval = ts;
+			}
 
 			LoadSensors(listener);
 			return listener;

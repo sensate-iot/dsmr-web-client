@@ -13,7 +13,7 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 		private CancellationTokenSource m_ct;
 		private Task m_backgroundTask;
 
-		public WebSocketListenerService(Uri remote, ILog logger) : base(remote, logger)
+		public WebSocketListenerService(Uri remote, TimeSpan subscriptionInterval, ILog logger) : base(remote, subscriptionInterval, logger)
 		{
 			this.m_backgroundTask = Task.CompletedTask;
 		}
@@ -37,7 +37,6 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 			base.Dispose(disposing);
 
 			if(disposing) {
-				this.m_socket.Dispose();
 				this.m_ct.Dispose();
 			}
 		}
