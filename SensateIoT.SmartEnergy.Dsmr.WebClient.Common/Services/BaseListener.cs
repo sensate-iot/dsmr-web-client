@@ -109,7 +109,7 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 
 		protected async Task ListenAsync(CancellationToken ct)
 		{
-			this.m_subscriptionTimer = new Timer(this.ResubscribeAsync, null, this.m_subscriptionInterval, this.m_subscriptionInterval);
+			this.StartResubscriptionTimer();
 
 			try {
 				await this.ListenInternalAsync(ct).ConfigureAwait(false);
@@ -117,6 +117,13 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 				this.m_subscriptionTimer.Change(Timeout.Infinite, Timeout.Infinite);
 				this.m_logger.Warn("Stopping because a stop has been requested!");
 			}
+		}
+
+		private void StartResubscriptionTimer()
+		{
+			this.m_subscriptionTimer = this.m_subscriptionInterval == TimeSpan.Zero ?
+				new Timer(this.ResubscribeAsync, null, Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan) :
+				new Timer(this.ResubscribeAsync, null, this.m_subscriptionInterval, this.m_subscriptionInterval);
 		}
 
 		private async void ResubscribeAsync(object args)
