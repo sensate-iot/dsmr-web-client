@@ -72,7 +72,7 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 					break;
 
 				case EventType.Ping:
-					logger.Info("PONG received.");
+					logger.Info($"PONG received from {sender.GetType().Name}");
 					Interlocked.Exchange(ref this.m_unansweredPings, 0);
 					break;
 
