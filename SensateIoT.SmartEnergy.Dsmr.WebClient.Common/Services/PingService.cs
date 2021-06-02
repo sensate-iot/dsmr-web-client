@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.WebSockets;
+using System.ServiceModel;
 using System.Threading;
 
 using log4net;
@@ -38,15 +39,27 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 			this.m_timer?.Change(Timeout.Infinite, Timeout.Infinite);
 		}
 
+		private void ValidatePingResponses()
+		{
+			if(this.m_unansweredPings >= 5) {
+				throw new EndpointNotFoundException($"Remote server not responding: {this.m_unansweredPings} pings unanswered!");
+			}
+		}
+
 		private async void InvokeAsync(object arg)
 		{
 			try {
+				this.ValidatePingResponses();
 				await this.m_client.PingAsync(CancellationToken.None);
+
 				Interlocked.Increment(ref this.m_unansweredPings);
 			} catch(InvalidOperationException) {
 				logger.Warn("Unable to write PING request to server.");
 			} catch(WebSocketException) {
 				logger.Warn("Unable to write PING request to server.");
+			} catch(Exception ex) {
+				logger.Fatal("Unable to ping remote server!", ex);
+				Environment.Exit(1);
 			}
 		}
 
@@ -59,8 +72,8 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 					break;
 
 				case EventType.Ping:
-					logger.Info("PONG received.");
-					Interlocked.Decrement(ref this.m_unansweredPings);
+					logger.Info($"PONG received from {sender.GetType().Name}");
+					Interlocked.Exchange(ref this.m_unansweredPings, 0);
 					break;
 
 				default:
