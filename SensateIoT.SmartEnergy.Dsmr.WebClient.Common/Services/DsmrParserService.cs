@@ -44,10 +44,7 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 					var removed = parsed.RemoveAll(t => t == null);
 					this.m_logger.Info($"Writing {parsed.Count} measurements to Sensate IoT. {removed} have " +
 					                   "been discarded due to parsing issues.");
-
-					var measurements = parsed.Select(this.buildElectricalMeasurement).ToList();
-					measurements.AddRange(parsed.Select(this.buildGasMeasurement));
-					this.postMeasurements(measurements).GetAwaiter().GetResult();
+					this.processMeasurements(parsed);
 
 					break;
 
@@ -58,6 +55,32 @@ namespace SensateIoT.SmartEnergy.Dsmr.WebClient.Common.Services
 				default:
 					throw new ArgumentOutOfRangeException();
 			}
+		}
+
+		private void processMeasurements(IEnumerable<Telegram> parsed)
+		{
+			var measurements = new List<Measurement>();
+
+			foreach(var telegram in parsed) {
+				var energy = this.buildElectricalMeasurement(telegram);
+				var gas = this.buildGasMeasurement(telegram);
+
+				if(energy == null) {
+					this.m_logger.Error("Failed to parse energy telegram.");
+					continue;
+				}
+
+				measurements.Add(energy);
+
+				if(gas == null) {
+					this.m_logger.Debug("Telegram contains no gas data, moving on.");
+					continue;
+				}
+
+				measurements.Add(gas);
+			}
+
+			this.postMeasurements(measurements).GetAwaiter().GetResult();
 		}
 
 		private Task postMeasurements(IEnumerable<Measurement> measurements)
